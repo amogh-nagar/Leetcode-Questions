@@ -5,7 +5,7 @@ public:
     {
         string p;
         char x='+';
-        stack<int> oped;
+        int lastnumber=0,result=0;
         for (int i = 0; i < s.length(); i++)
         {
             if (s[i] >= '0' && s[i] <= '9')
@@ -24,50 +24,45 @@ public:
                 r=stoi(p);
                 p="";
                 if(x=='+'){
-                    oped.push(r);
+                    result+=lastnumber;
+                    lastnumber=r;
                 }
                 else if(x=='-'){
-                    oped.push(-1*r);
+                    result+=lastnumber;
+                    lastnumber=-1*r;
                 }
                 else if(x=='*'){
-                    int y=oped.top();
-                    oped.pop();
-                    oped.push(y*r);
+                    lastnumber=lastnumber*r;
                 }
                 else if(x=='/'){
-                    int y=oped.top();
-                    oped.pop();
-                    oped.push(y/r);
+                    
+                    lastnumber=lastnumber/r;
                 }
                 x=s[i];
             }
             
         }
-                        int r=stoi(p);
-
-        if(x=='+'){
-                    oped.push(r);
-                }
-                else if(x=='-'){
-                    oped.push(-1*r);
-                }
-                else if(x=='*'){
-                    int y=oped.top();
-                    oped.pop();
-                    oped.push(y*r);
-                }
-                else if(x=='/'){
-                    int y=oped.top();
-                    oped.pop();
-                    oped.push(y/r);
-                }
-        r = 0;
-            while (!oped.empty())
-                {
-                r+=oped.top();
-                    oped.pop();
-                    
-                }
-               return r;
+                int r=stoi(p);
+                          if (x == '+')
+        {
+                                                result+=(lastnumber+r);
+  
+        }
+        else if (x == '-')
+        {
+                  result+=(lastnumber-r);
+          }
+        else if (x == '*')
+        {
+                    result+=(lastnumber*r);
+        }
+        else if (x == '/')
+        {
+                              result+=(lastnumber/r);
+  
+        }
+  
+                
+               return result;
     }
 };
