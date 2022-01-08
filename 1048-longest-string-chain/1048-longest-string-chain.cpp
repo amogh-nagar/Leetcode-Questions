@@ -19,7 +19,7 @@ private:
         //     3) more than one of pre[i] and curr[j] is not equal, return false
         int i = 0, j = 0;
         while (i < pre.size() && j < curr.size()) {
-            if (j - i < 0 || j - i > 1) {
+            if (j - i > 1) {
                 return false;
             }
             if (pre[i] != curr[j]) {
