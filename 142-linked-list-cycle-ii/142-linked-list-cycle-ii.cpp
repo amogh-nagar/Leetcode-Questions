@@ -20,13 +20,13 @@ public:
                f=f->next->next;
             
         }while(f &&s && f->next&&f->next->next && f!=s);
-            // cout<<f->val<<s->val<<endl;
+           
         
     if(f && s && f==s){
         
         f=head;
         while(f!=s){
-            // cout<<f->val<<s->val<<endl;
+           
             f=f->next;
             s=s->next;
         }
