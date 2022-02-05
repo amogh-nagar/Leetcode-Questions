@@ -16,7 +16,7 @@ public:
             v[i].first=i;
             v[i].second=graphs[i];
         }
-        sort(v,v+n,comp);
+        // sort(v,v+n,comp);
         int m=0;
         for(int i=0;i<n-1;i++){
             for(int j=i+1;j<n;j++){
