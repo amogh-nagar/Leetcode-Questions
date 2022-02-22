@@ -19,8 +19,14 @@ public:
         int n=nums.size();
         int m=multi.size();
         
-        memset(dp,-1,sizeof(dp));
-        return solve(0,0,nums,multi);
+        memset(dp,0,sizeof(dp));
+        for(int i=m-1;i>=0;i--){
+            for(int l=i;l>=0;l--){
+                int right=nums[nums.size()-1-(i-l)] * multi[i]+dp[l][i+1];
+                dp[l][i]=max(nums[l]*multi[i]+dp[l+1][i+1],right);
+            }
+        }
+        return dp[0][0];
         
         
         
