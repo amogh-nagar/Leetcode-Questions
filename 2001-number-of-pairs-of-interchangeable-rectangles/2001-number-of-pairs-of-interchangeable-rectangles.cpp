@@ -6,9 +6,14 @@ public:
         ll c=0;
         
         for(auto x:rectangles){
-            c+=m[(double)x[0]/x[1]];
             m[(double)x[0]/x[1]]++;
         }
+        
+        for(auto x:m){
+          auto y=x.second;
+          c+=(y*(y-1)/2);    
+        }
+        
         return c;
     }
 };
