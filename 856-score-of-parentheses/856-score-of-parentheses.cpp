@@ -3,31 +3,28 @@ public:
     int scoreOfParentheses(string s) {
         
         stack<int> st;
-        stack<pair<int,int>> s1;
         for(int i=0;i<s.length();i++){
             if(s[i]=='('){
-                st.push(i);
+                st.push(0);
             }else{
-                if(i-st.top()==1){
-                    
-                    s1.push({1,st.top()});
+                if(st.top()==0){
                     st.pop();
+                    st.push(1);
                     continue;
                 }
-                int x=st.top();
-                st.pop();
                 int c=0;
-                while(!s1.empty() && s1.top().second>=x){
-                    c+=s1.top().first;
-                    s1.pop();
+                while(!st.empty() && st.top()!=0){
+                    c+=st.top();
+                    st.pop();
                 }
-                s1.push({c*2,x});
+                st.pop();
+                st.push(2*c);
             }
         }
         int c=0;
-        while(!s1.empty()){
-            c+=s1.top().first;
-            s1.pop();
+        while(!st.empty()){
+            c+=st.top();
+            st.pop();
         }
         return c;
     }
