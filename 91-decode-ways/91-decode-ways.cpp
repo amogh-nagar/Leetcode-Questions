@@ -1,26 +1,44 @@
 class Solution {
 public:
-    unordered_map<string,int> dp;
+    bool isvalid(string s){
+        if(s[0]=='0'){
+            return false;
+        }
+        if(s.length()==1){
+            return true;
+        }
+        if(s>="1" && s<="26"){
+            return true;
+        }
+        return false;
+    }
     
     int numDecodings(string s) {
-        if(s.size()==0){
-            return 1;
+        if(s.length()==1){
+           if(s[0]=='0'){
+            return false;
+           }
+           return true; 
         }
-        if(dp[s]!=0){
-            return dp[s];
+        vector<int> dp(s.length(),0);
+        if(isvalid(s.substr(0,1))){
+            dp[0]=1;
         }
-        int c=0;
-        string t="";
-        for(int i=0;i<s.length();i++){
-            t+=s[i];
-            
-            if(stoi(t)>=1 && stoi(t)<=26){
-                c+=numDecodings(s.substr(i+1));
-            }else{
-                break;
+        
+        if(isvalid(s.substr(1,1))){
+            dp[1]=dp[0];
+        }
+        if(isvalid(s.substr(0,2))){
+            dp[1]++;
+        }
+        for(int i=2;i<s.length();i++){
+            string x=s.substr(i-1,2);
+            if(isvalid(x)){
+                dp[i]+=dp[i-2];
             }
+            if(isvalid(s.substr(i,1)))
+                dp[i]+=dp[i-1];
         }
-        return dp[s]=c;
-    
+        return dp[s.length()-1];
     }
 };
