@@ -1,29 +1,26 @@
 class Solution {
 public:
+    unordered_map<string,int> dp;
+    
     int numDecodings(string s) {
-        if(s[0]=='0'){
-            return 0;
-        }
-        if(s.length()==1){
+        if(s.size()==0){
             return 1;
         }
-        
-        vector<int> dp(s.length()+1,0);
-        int n=s.length();
-        dp[1]=1;
-        dp[0]=1;
-        for(int i=2;i<=n;i++){
+        if(dp[s]!=0){
+            return dp[s];
+        }
+        int c=0;
+        string t="";
+        for(int i=0;i<s.length();i++){
+            t+=s[i];
             
-            
-            string x=s.substr(i-2,2);
-            char c=s[i-1]-'0';
-            if(c!=0){
-                dp[i]=dp[i-1];
-            }
-            if(stoi(x)<=26 && stoi(x)>=10){
-                dp[i]+=dp[i-2];
+            if(stoi(t)>=1 && stoi(t)<=26){
+                c+=numDecodings(s.substr(i+1));
+            }else{
+                break;
             }
         }
-        return dp[n];
+        return dp[s]=c;
+    
     }
 };
