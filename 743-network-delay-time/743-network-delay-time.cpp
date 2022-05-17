@@ -1,31 +1,26 @@
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        vector<vector<pair<int,int>>> v(n+1);
-        for(int i=0;i<times.size();i++){
-            v[times[i][0]].push_back({times[i][1],times[i][2]});
+        vector<vector<pair<int,int>>> g(n+1);
+        for(auto x:times){
+            g[x[0]].push_back({x[1],x[2]});
         }
-        vector<int> time(n+1,INT_MAX);
-        time[k]=0;
-        queue<pair<int,int>> q;
-        q.push({0,k});
+        queue<int> q;
+        q.push(k);
+        vector<int> vis(n+1,INT_MAX);
+        vis[k]=0;        
         while(!q.empty()){
-            pair<int,int> x=q.front();
+            auto t=q.front();
             q.pop();
-            
-            for(auto it:v[x.second]){
-                if(time[it.first]>x.first+it.second){
-                    time[it.first]=x.first+it.second;
-                    q.push({time[it.first],it.first});
+            for(auto y:g[t]){
+                if(vis[y.first]>vis[t]+y.second){
+                    vis[y.first]=vis[t]+y.second;
+                    q.push(y.first);
                 }
-            
-            }        
-            
+            }
         }
-        int x=*max_element(time.begin()+1,time.end());
-        if(x==INT_MAX)
+        if(*max_element(vis.begin()+1,vis.end())==INT_MAX)
             return -1;
-        return x;
-        
+        return *max_element(vis.begin()+1,vis.end());
     }
 };
