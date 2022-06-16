@@ -9,15 +9,13 @@ public:
         }
         int i=0,j=0,c=0;
         while(i<x.size() && j<y.size()){
-            if(x[i]!=y[j]){
-                c++;
-            }else{
+            if(x[i]==y[j]){
                 i++;
             }
             
             j++;
         }
-        return (c==1 && i==x.length() && j==y.length())||(c==0 && i==x.length() && j==y.length()-1);
+        return i==x.length();
     }
     int longestStrChain(vector<string>& words) {
         sort(words.begin(),words.end(),comp);
