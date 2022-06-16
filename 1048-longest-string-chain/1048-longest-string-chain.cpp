@@ -1,51 +1,36 @@
-class Solution
-{
+class Solution {
 public:
-    static bool comp(string &a, string &b) {
-        return a.size() < b.size();
+    bool static comp(string a,string b){
+        return a.length()<b.length();
     }
-    bool solve(string x, string y)
-    {
-        if (x.length() != y.length() + 1)
-        {
+    bool isvalid(string x,string y){
+        if(x.length()+1!=y.length()){
             return false;
         }
-        int l = 0, m = 0;
-        while (l < x.length() && m < y.length())
-        {
-            if(l-m>1){
-                return false;
+        int i=0,j=0,c=0;
+        while(i<x.size() && j<y.size()){
+            if(x[i]!=y[j]){
+                c++;
+            }else{
+                i++;
             }
-            if (x[l] != y[m])
-            {
-                
-                l++;
-            }
-            else
-            {
-                l++;
-                m++;
-            }
+            
+            j++;
         }
-        return m==y.length();
+        return (c==1 && i==x.length() && j==y.length())||(c==0 && i==x.length() && j==y.length()-1);
     }
-
-    int longestStrChain(vector<string> &words)
-    {
-        int n = words.size();
-        sort(words.begin(), words.end(), comp);
-        vector<int> dp(n, 1);
-        int m = 1;
-        for (int i = 1; i < n; i++)
-        {
-            for (int j = 0; j < i; j++)
-            {
-                if (solve(words[i], words[j]))
-                {
-                    dp[i] = max(dp[i], dp[j] + 1);
-                m=max(m,dp[i]);
-                } }
+    int longestStrChain(vector<string>& words) {
+        sort(words.begin(),words.end(),comp);
+        vector<int> dp(words.size(),1);
+        int maxi=0;
+        for(int i=0;i<words.size();i++){
+            for(int j=0;j<i;j++){
+                if(isvalid(words[j],words[i])){
+                    dp[i]=max(dp[i],dp[j]+1);
+                }
+            }
+            maxi=max(maxi,dp[i]);
         }
-        return m;
+        return maxi;
     }
 };
