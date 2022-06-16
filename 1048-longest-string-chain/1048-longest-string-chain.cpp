@@ -1,34 +1,19 @@
 class Solution {
-public:
-    bool static comp(string a,string b){
-        return a.length()<b.length();
-    }
-    bool isvalid(string x,string y){
-        if(x.length()+1!=y.length()){
-            return false;
-        }
-        int i=0,j=0,c=0;
-        while(i<x.size() && j<y.size()){
-            if(x[i]==y[j]){
-                i++;
-            }
-            
-            j++;
-        }
-        return i==x.length();
-    }
-    int longestStrChain(vector<string>& words) {
-        sort(words.begin(),words.end(),comp);
-        vector<int> dp(words.size(),1);
-        int maxi=0;
-        for(int i=0;i<words.size();i++){
-            for(int j=0;j<i;j++){
-                if(isvalid(words[j],words[i])){
-                    dp[i]=max(dp[i],dp[j]+1);
+   public:
+    int longestStrChain(vector<string> &words) {
+        unordered_map<string, int> dp;
+        int res = 1;
+        sort(words.begin(), words.end(), [](const string &l, const string &r) { return l.size() < r.size(); });
+        for (string word : words) {
+            dp[word] = 1;
+            for (int i = 0; i < word.size(); i++) {
+                string prev = word.substr(0, i) + word.substr(i + 1);
+                if (dp.find(prev) != dp.end()) {
+                    dp[word] = max(dp[word],dp[prev] + 1);
+                    res = max(res, dp[word]);
                 }
             }
-            maxi=max(maxi,dp[i]);
         }
-        return maxi;
+        return res;
     }
 };
